@@ -39,4 +39,21 @@ public class FloatingPickup : MonoBehaviour
             transform.localScale = baseScale * scaleOffset;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Object entered");
+        if (other.CompareTag("Player"))
+        {
+            // Access the player's script and "add" this item
+            PlayerInventory inventory = other.GetComponent<PlayerInventory>();
+            if (inventory != null)
+            {
+                inventory.AddItem(gameObject.name); // pass item name or ID
+            }
+            Debug.Log("Item picked up");
+            // destroy the pickup object
+            Destroy(gameObject);
+        }
+    }
 }
